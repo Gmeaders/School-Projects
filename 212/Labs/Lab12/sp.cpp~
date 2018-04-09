@@ -1,0 +1,125 @@
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+typedef pair<float, int> Priority;
+
+struct Edge {
+  int src, dst; //source and destination
+  float travel_time;
+};
+
+
+// priority queue of pairs
+int N, M;
+Edge *E;
+int source = 17731931;
+
+// compare two edges based on their source nodes 
+// (break ties using destination nodes)
+bool comp(Edge e1, Edge e2)
+{
+  if (e1.src == e2.src) return e1.dst < e2.dst;
+  return e1.src < e2.src;
+}
+
+/*
+Dijkstra:
+    c[src] = 0, c[j != s] = -1;
+    build a priority queue Q on the c[j]'s
+    while q is nonempty:
+        remove from Q the node i having minimum label c[i]
+        (at this point we know c[i] is correct)
+        tighten all edges emanating from i
+*/
+double D(int *first_edge)
+{
+   double *array;
+   array = new double [N];
+   double best = 0;
+   
+   for(int i = 0; i < N; i++)
+   {
+      array[i] = 999999999999999;
+   }
+   array[source] = 0;
+   priority_queue<Priority> Q;
+   Q.push(Priority(0, source));
+   
+   while(!Q.empty())
+   {
+    Priority comp = Q.top();
+    
+    if(array[comp.second] > best)
+        best = array[comp.second];
+    Q.pop();
+    
+        for(int i = first_edge[comp.second]; i < M && i < first_edge[comp.second+1]; i++)
+        {
+            if(array[E[i].dst] > E[i].travel_time + array[comp.second])
+            {
+                array[E[i].dst] = E[i].travel_time + array[comp.second];
+                Q.push(Priority(-array[E[i].dst], E[i].dst));
+            }
+        }
+    }
+    
+    return best;
+}
+            
+   
+    
+int main(void)
+{
+  FILE *fp = popen ("zcat /tmp/usa_network.txt.gz", "r");
+  fscanf (fp, "%d %d", &N, &M);
+  E = new Edge[M];
+  printf ("Reading input");
+  for (int i=0; i<M; i++) {
+    fscanf (fp, "%d %d %f", &E[i].src, &E[i].dst, &E[i].travel_time);
+    if (i % 1000000 == 0) { printf ("."); fflush(stdout); }
+  }
+  fclose(fp);
+  printf (" Done.\n" ); fflush(stdout); 
+
+  sort(E, E+M, comp);
+  
+  int counter = 0;
+  int *first_edge;
+  first_edge = new int [N];
+  int current = -1;
+  for(int i = 0; i < M; i++)
+  {
+    if(E[i].src > current)
+    {
+       first_edge[counter] = i;
+       counter++;
+    }
+    current = E[i].src;
+       
+  }
+  
+  double x;
+  double y;
+  
+  x = D(first_edge);
+  x = x/3600.0;
+  
+  for (int i = 0; i < M; i++)
+  {
+    swap(E[i].src, E[i].dst);
+  }
+  
+  sort(E, E+M, comp);
+  
+  y = D(first_edge);
+  y = y /3600.0; 
+  
+  cout << "Diameter between " << (x+y)/ 2 << " and " << (x + y) << endl; 
+
+  // The node right in front of McAdams Hall is number 17731931.
+  
+  return 0;
+}

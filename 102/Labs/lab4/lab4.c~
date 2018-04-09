@@ -1,0 +1,30 @@
+//if not defined, include lab4.h
+
+#include "lab4.h"
+
+int main(){
+	//Only do the following if lab4.h has been included, else, print an error
+	#ifdef LAB4_INCLUDE
+	double radius;
+	printf("Enter the radius you wish to compute: \n");
+	scanf("%lf", &radius);
+	double area1, area2;
+
+	area1 = circle_area_old(radius);
+	printf("Using the old area function with x=%.2lf, the area is: %.2lf\n", radius, area1);
+
+	area2 = circle_area_new(radius);
+	printf("Using the new area function with x=%.2lf, the area is: %.2lf\n", radius, area2);
+
+	#else
+		#error "lab4.h is not included"
+	#endif
+	//Ask the user for the radius they wish to compute and store it, then calculate it using the old area function and the new area function
+
+
+
+
+   return 0;
+}
+
+

@@ -1,0 +1,28 @@
+
+#include "lab4.h"
+
+
+#define PI 3.14
+
+//define a function to square a value
+#define SQUARE(x) (x)*(x) 
+
+double circle_area_old(double radius)
+{
+	#warning "circle_area_old has been deprecated"
+
+//Calculate the area without using your defined PI or defined SQUARE function
+	double area;
+	area = 3.14*radius*radius;
+	return area;
+}
+
+double circle_area_new(double radius)
+{
+	double area;
+	area = PI*SQUARE(radius);
+	return area;
+	//calculate area using both of your DEFINE statements from above
+
+
+}

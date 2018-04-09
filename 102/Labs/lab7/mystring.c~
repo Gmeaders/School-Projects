@@ -1,0 +1,94 @@
+#include <string.h>
+#include "mystring.h"
+
+// returns the length of str
+size_t my_strlen(const char *str)
+{
+	size_t len = 0;
+	while(str[len] != '\0')
+	{
+		++len;
+	}
+	return len;
+}
+// copies source into destination until reaching null terminator
+// returns destination
+char *my_strcpy(char *destination, const char *source)
+{
+	size_t i = 0;
+	while(source[i] != '\0')
+	{
+		destination[i] = source[i];
+		i++;
+	}
+	destination[i] = '\0';
+	
+	return destination;
+}
+
+// copies num characters from source into destination
+// once null has been reached in the source, destination is padded with null chars
+// returns destination
+char *my_strncpy(char *destination, const char *source, size_t num)
+{
+	int i = 0;
+	for(i = 0; i< num; i++)
+	{
+		if(source[i] != '\0')
+		{
+			destination[i] = source[i];
+		}
+		else if(source[i] == '\0')
+		{
+			destination[i] = '\0';
+		}
+		if(strlen(source) < num)
+		{
+			for(; i < num; i++)
+			{
+				destination[i] = '\0';
+			}
+		}
+	
+		
+	}
+	
+	return destination;
+}
+
+// copies source into destination until reaching null 
+// terminator OR num chars has been reached, whichever comes first
+// if no null terminator was copied from source to destination,
+// replace the last char in destination with a null terminator
+// returns length of source
+size_t my_strlcpy(char *destination, const char *source, size_t dstsize)
+{
+	int i;
+	size_t len = my_strlen(source);
+	for(i = 0; i < dstsize; i++)
+	{
+		if(source[i] != '\0' || i == dstsize)
+		{
+			destination[i] = source[i];
+		}
+
+	}	
+
+	destination[dstsize -1] = '\0';
+	
+	return len;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+Milk 4 30
+Bread 2 92
+Eggs 3 8
+Cheese 5 75
+Rice 0 75
+Apples 3 96
+Bacon 5 90
+Butter 4 58
+Chicken 7 98
+Flour 2 9

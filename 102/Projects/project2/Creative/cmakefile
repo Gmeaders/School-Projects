@@ -1,0 +1,16 @@
+SRC = cray.c cvector.c clight.c cplane.c csphere.c
+
+OBJ = cray.o cvector.o clight.o cplane.o csphere.o
+
+PROG = cproject2
+
+$(PROG) : $(OBJ)
+	gcc $(SRC) -o $(PROG) -lm
+
+$(OBJ) : $(SRC)
+
+clean:
+	rm *.o
+
+cleaner:
+	rm *~

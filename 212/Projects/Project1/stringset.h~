@@ -1,0 +1,39 @@
+#ifndef STRINGSET_H /* Prevent multiple inclusion... */
+#define STRINGSET_H
+
+#include <string>
+using namespace std;
+
+struct Node {
+  string key;
+  Node *next;
+  int ID;
+  Node(string k, int val, Node *n) { key = k; ID = val; next = n; }
+  Node() { key = ""; ID = -1; next = NULL; }
+};
+
+struct Page {
+    string url;
+    Node *words;
+    Node *hyperlink;
+    double weight;
+    double new_weight;
+    int links_to;
+    Page(string g) { url = g; words = NULL; hyperlink = NULL; }
+};
+
+class Stringset {
+
+ private: 
+  Node **table;  // array of pointers to linked lists
+  int size;      // size of table, as currently allocated
+  int num_elems; // number of elements stored in the table
+
+ public:
+  Stringset();
+  ~Stringset();
+  int find(string key);
+  bool insert(string key, int val);
+};
+
+#endif
